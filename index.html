@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+ <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+ <meta name="theme-color" content="#141c1b"><meta name="description" content="鋼鐵季風：經典像素與現代高清雙風格叢林戰場，直覺觸控與鍵盤操作，原創街機音樂的橫向射擊遊戲。">
+ <title>IRON MONSOON｜鋼鐵季風</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23182120'/%3E%3Cpath d='M14 14h12v36H14zm24 0h12v36H38zM24 14h16L32 36z' fill='%23f7c660'/%3E%3C/svg%3E"><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="stage" aria-label="鋼鐵季風橫向射擊遊戲">
+ <canvas id="game" width="1280" height="720" aria-label="叢林戰場，使用鍵盤或下方觸控按鈕操作"></canvas>
+ <div class="vignette" aria-hidden="true"></div><div class="scanlines" aria-hidden="true"></div>
+ <header class="topbar">
+  <a class="brand" href="#" id="home" aria-label="返回遊戲主選單"><svg viewBox="0 0 32 32"><path d="M3 5h7v22H3zm19 0h7v22h-7zM9 5h14L16 20z" fill="currentColor"/></svg><span>MONSOON<small>ARCADE DIVISION</small></span></a>
+  <div class="visual-switch" role="group" aria-label="視覺風格"><button data-visual="pixel" class="selected" aria-pressed="true"><span>經典像素</span><small>PIXEL</small></button><button data-visual="modern" aria-pressed="false"><span>現代高清</span><small>HD</small></button><button data-visual="cyber" aria-pressed="false"><span>未來科幻</span><small>CYBER</small></button></div>
+  <nav class="tools" aria-label="遊戲控制">
+   <button id="sound" class="icon-btn" aria-label="關閉聲音" title="聲音"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4zm12-1c2 2 2 6 0 8m3-11c4 4 4 10 0 14"/></svg><i id="muteSlash" hidden></i></button>
+   <button id="help" class="icon-btn" aria-label="操作說明" title="操作說明"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 1 1 4 3c-1 0-1 1-1 2m0 3h.01"/></svg></button>
+   <button id="fullscreen" class="icon-btn" aria-label="全螢幕" title="全螢幕"><svg viewBox="0 0 24 24"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></svg></button>
+   <button id="touchToggle" class="icon-btn" aria-label="顯示觸控按鈕" title="切換觸控按鈕" aria-pressed="false" hidden><svg viewBox="0 0 24 24"><path d="M7 7h10c3 0 5 10 3 11-2 1-4-3-5-3H9c-1 0-3 4-5 3-2-1 0-11 3-11zm0 3v4m-2-2h4m6-1h.01m3 2h.01"/></svg></button>
+   <button id="pause" class="icon-btn" aria-label="暫停遊戲" title="暫停 (Esc)" hidden><svg viewBox="0 0 24 24"><path d="M8 5v14m8-14v14" stroke-width="4"/></svg></button>
+  </nav>
+ </header>
+ <section id="menu" class="menu">
+  <div class="eyebrow"><span></span> OPERATION 01 <b>叢林突圍</b></div>
+  <h1>IRON<br><em>MONSOON</em></h1>
+  <div class="chinese-title"><span>鋼鐵季風</span><i>NO BACKUP. NO WAY BACK.</i></div>
+  <p class="intro">深入敵後，突破火線。<br>一場屬於你的經典街機戰役。</p>
+  <div class="launch-row"><button id="start" class="primary"><span class="play-triangle"></span>開始任務 <small>DEPLOY</small><b>→</b></button><button id="settings" class="settings" aria-label="遊戲設定"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 17h16M8 4v6m8 4v6"/></svg></button></div>
+  <div class="menu-meta"><span>1 PLAYER</span><i></i><span>3 SECTORS</span><i></i><span>FREE PLAY</span></div>
+ </section>
+ <aside class="mission-note" id="missionNote"><div>MISSION BRIEF <span>01 — 03</span></div><strong>穿越禁區<br>摧毀鋼鐵巨獸</strong><p>步兵 · 無人機 · 重裝戰車</p><div class="mini-route"><i class="active"></i><span></span><i></i><span></span><i></i></div></aside>
+ <div id="hud" class="hud" hidden>
+  <div class="player-status"><div class="status-title"><b>1P</b> <span>RAVEN</span><small id="hpText">5 / 5</small></div><div class="hp-bars" id="hpBars"></div><div class="weapon-line"><b id="weapon">RIFLE</b><span id="ammo">∞</span><i></i><span>G <b id="grenades">08</b></span></div></div>
+  <div class="score-box"><span>SCORE</span><strong id="score">000000</strong><small>BEST <b id="bestInGame">000000</b></small></div>
+  <div class="sector-box"><span id="sectorName">01 / 叢林前哨</span><div class="progress"><i id="progress"></i></div><small id="rescueCount">救援 0 / 3</small></div>
+ </div>
+ <div id="bossHud" class="boss-hud" hidden><div><span>⚠ HEAVY ARMOR</span><b>鋼鐵巨獸 · GOLIATH</b></div><div class="boss-track"><i id="bossHealth"></i></div></div>
+ <div id="sectorBanner" class="sector-banner" hidden><small id="bannerSub">OPERATION 01</small><strong id="bannerTitle">MISSION START</strong><span id="bannerCn">向右推進，突破敵軍防線</span></div>
+ <div class="advance" id="advance" hidden>GO <span>→</span></div>
+ <footer id="menuFooter" class="menu-footer"><div class="desktop-guide"><span><kbd>←</kbd><kbd>→</kbd> 移動</span><span><kbd>SPACE</kbd> 跳躍</span><span><kbd>J</kbd> 射擊</span><span><kbd>K</kbd> 手榴彈</span><span class="more-keys"><kbd>↑</kbd><kbd>↓</kbd> 瞄準 / 蹲下</span></div><span class="touch-guide">橫向握持 · 左手移動，右手戰鬥</span><div class="best">HIGH SCORE <b id="best">000000</b></div></footer>
+ <div id="playFooter" class="play-footer" hidden><span><kbd>W A S D</kbd> / 方向鍵 移動與瞄準 <kbd>SPACE</kbd> 跳躍 <kbd>J</kbd> 射擊 <kbd>K</kbd> 手榴彈</span><button id="autoFire" class="auto-fire" aria-pressed="false">自動射擊 <b>OFF</b></button></div>
+ <div id="touchControls" class="touch-controls" hidden aria-label="手機觸控控制">
+  <div class="dpad"><button data-key="up" class="d-up" aria-label="向上瞄準">▲</button><button data-key="left" class="d-left" aria-label="向左移動">◀</button><div class="d-center"></div><button data-key="right" class="d-right" aria-label="向右移動">▶</button><button data-key="down" class="d-down" aria-label="蹲下">▼</button></div>
+  <button id="touchAuto" class="touch-auto" aria-pressed="false">AUTO <b>OFF</b></button>
+  <div class="action-pad"><button data-key="grenade" class="action grenade" aria-label="投擲手榴彈"><b>✦</b><span>手榴彈</span></button><button data-key="jump" class="action jump" aria-label="跳躍"><b>↟</b><span>跳躍</span></button><button data-key="fire" class="action fire" aria-label="連續射擊"><b>⌖</b><span>射擊</span></button></div>
+ </div>
+ <div id="modalLayer" class="modal-layer" hidden>
+  <section id="helpPanel" class="panel" hidden role="dialog" aria-modal="true" aria-labelledby="helpTitle"><button class="close" aria-label="關閉操作說明">×</button><div class="eyebrow">FIELD MANUAL</div><h2 id="helpTitle">準備好，突破火線。</h2><p>一路向右推進，摧毀關底戰車即完成任務。</p><div class="guide-grid"><div><b>移動 / 瞄準</b><span>W A S D 或方向鍵<br>↑ 向上射擊 · ↓ 蹲下閃避</span></div><div><b>跳躍 / 射擊 / 手榴彈</b><span>空白鍵 / J 或 Z / K 或 X<br>長按射擊連發，手榴彈點按投擲</span></div><div><b>手機雙手操作</b><span>左側方向鍵，右側戰鬥鍵<br>可開啟 AUTO 自動射擊</span></div><div><b>救援與補給</b><span>靠近人質完成救援<br>擊破補給箱，取得武器與補血</span></div></div><div class="pickup-guide"><b>H <span>重機槍</span></b><b>S <span>散彈槍</span></b><b>G <span>手榴彈</span></b><b>＋ <span>急救包</span></b></div><p class="fine">Esc / P 暫停。離開分頁時自動暫停。聲音於首次操作後啟用。</p><button class="primary close-panel">收到，準備出發 <b>→</b></button></section>
+  <section id="settingsPanel" class="panel compact" hidden role="dialog" aria-modal="true" aria-labelledby="settingsTitle"><button class="close" aria-label="關閉遊戲設定">×</button><div class="eyebrow">LOADOUT</div><h2 id="settingsTitle">你的街機，你的節奏。</h2><label>任務難度</label><div class="segmented" id="difficulty"><button data-mode="arcade" class="selected">經典街機 <small>5 格生命</small></button><button data-mode="practice">新兵練習 <small>9 格生命</small></button></div><div class="setting-row"><span>背景音樂<small>原創晶片音樂 · 138 BPM</small></span><button id="musicToggle" class="toggle on" aria-pressed="true" aria-label="背景音樂">ON</button></div><div class="setting-row"><span>音效<small>槍火、爆炸與補給提示</small></span><button id="sfxToggle" class="toggle on" aria-pressed="true" aria-label="戰鬥音效">ON</button></div><div class="setting-row"><span>自動射擊<small>專注移動與閃避，射擊交給我們</small></span><button id="autoToggle" class="toggle" aria-pressed="false" aria-label="自動射擊">OFF</button></div><button class="primary close-panel">完成設定 <b>→</b></button></section>
+  <section id="pausePanel" class="panel compact pause-panel" hidden role="dialog" aria-modal="true" aria-labelledby="pauseTitle"><div class="eyebrow">TAKE A BREATHER</div><h2 id="pauseTitle">戰場暫停中。</h2><p>深呼吸，下一波交給你。</p><div class="pause-visual" role="group" aria-label="暫停畫面風格"><button data-visual="pixel" class="selected" aria-pressed="true">經典像素</button><button data-visual="modern" aria-pressed="false">現代高清</button><button data-visual="cyber" aria-pressed="false">未來科幻</button></div><button id="resume" class="primary">繼續任務 <b>→</b></button><button id="restart" class="secondary">重新開始</button><button id="backMenu" class="text-button">返回主選單</button></section>
+  <section id="resultPanel" class="panel result-panel" hidden role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="eyebrow" id="resultSub">OPERATION COMPLETE</div><h2 id="resultTitle">MISSION COMPLETE</h2><p id="resultText">火線已突破。你的傳奇，才正要開始。</p><div class="result-score"><small>FINAL SCORE</small><strong id="finalScore">000000</strong><b id="newBest" hidden>NEW HIGH SCORE</b></div><div class="result-stats"><div><b id="finalKills">0</b><span>擊破敵軍</span></div><div><b id="finalRescue">0 / 3</b><span>人質救援</span></div><div><b id="finalTime">00:00</b><span>作戰時間</span></div></div><button id="retry" class="primary">再次出擊 <b>→</b></button><button id="resultMenu" class="text-button">返回主選單</button></section>
+ </div>
+ <div id="toast" class="toast" role="status" hidden></div>
+ <div class="portrait-note">↻ 橫向握持，展開完整戰場</div>
+ <div id="loading" class="loading"><span class="load-mark">M</span><b>部署戰場中</b><small>LOADING THE FRONTLINE</small></div>
+ <div class="faction-legend" aria-label="陣營配色"><span><i></i>友軍</span><span><i></i>機械軍團</span></div>
+ <div id="visualLoading" class="visual-loading" hidden role="status" aria-live="polite"><small>HIGH DEFINITION</small><strong>高清戰場載入中</strong><div class="visual-load-track"><i id="visualLoadBar"></i></div><span id="visualLoadText">0%</span></div>
+</main>
+<script type="module" src="main.js"></script>
+</body></html>

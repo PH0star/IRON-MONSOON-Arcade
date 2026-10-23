@@ -1,2 +1,13 @@
-# IRON-MONSOON-Arcade
-IRON MONSOON｜鋼鐵季風 — 16:9 arcade shooter with Classic Pixel, Modern HD and Cyberpunk visual modes. Public GitHub Pages release.
+# IRON MONSOON｜鋼鐵季風
+
+16:9 原創橫向卷軸射擊遊戲，支援電腦鍵盤與手機多點觸控。
+
+三種完整視覺模組：經典像素、現代高清、未來科幻 CYBER。
+
+版本：v1.2.0
+
+方向鍵／WASD 移動，Space 跳躍，J／Z 射擊，K／X 投彈，P／Esc 暫停，M 靜音。手機建議橫向遊玩。
+
+此儲存庫提供 GitHub Pages 公開遊戲版本。原始完整開發備份另行保存。
+
+美術、程式、音樂與音效為本專案原創或生成製作；未授予額外的素材再散布授權。
